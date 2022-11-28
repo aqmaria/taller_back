@@ -18,6 +18,9 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
+        if(!username.equals(securityProperties.getUsername())){
+            throw new UsernameNotFoundException("user not found");
+        }
         return new User(securityProperties.getUsername(),
                 "{noop}".concat(securityProperties.getPassword()),
                 new ArrayList<>());
